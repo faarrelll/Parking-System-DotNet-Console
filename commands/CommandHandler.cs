@@ -1,5 +1,7 @@
+using ParkingSystem.Constants;
 using ParkingSystem.Interfaces;
 using ParkingSystem.Services;
+using ParkingSystem.UI;
 
 namespace ParkingSystem.Commands
 {
@@ -11,7 +13,7 @@ namespace ParkingSystem.Commands
         {
             if (string.IsNullOrEmpty(input))
             {
-                Console.WriteLine("Please enter a command");
+                ConsoleUI.ShowError("Please enter a command");
                 return;
             }
 
@@ -21,93 +23,94 @@ namespace ParkingSystem.Commands
             {
                 switch (inputs[0].ToLower())
                 {
-                    case "create_parking_lot":
+                    case CommandConstants.CREATE_PARKING_LOT:
                         int totalSlots = int.Parse(inputs[1]);
                         _parkingService = new ParkingLotService(totalSlots);
-                        Console.WriteLine($"Created a parking lot with {totalSlots} slots");
+                        ConsoleUI.ShowSuccess($"Created a parking lot with {totalSlots} slots");
                         break;
 
-                    case "park":
+                    case CommandConstants.PARK:
                         ValidateService();
                         if (_parkingService != null)
                         {
-                            Console.WriteLine(_parkingService.Park(inputs[1], inputs[2], inputs[3]));
+                            ConsoleUI.ShowSuccess(_parkingService.Park(inputs[1], inputs[2], inputs[3]));
                         }
                         break;
 
-                    case "leave":
+                    case CommandConstants.LEAVE:
                         ValidateService();
                         if (_parkingService != null)
                         {
-                            Console.WriteLine(_parkingService.Leave(int.Parse(inputs[1])));
+                            ConsoleUI.ShowSuccess(_parkingService.Leave(int.Parse(inputs[1])));
                         }
                         break;
 
-                    case "status":
+                    case CommandConstants.STATUS:
                         ValidateService();
                         _parkingService?.Status();
                         break;
 
-                    case "type_of_vehicles":
+                    case CommandConstants.TYPE_OF_VEHICLES:
                         ValidateService();
                         if (_parkingService != null)
                         {
-                            Console.WriteLine(_parkingService.GetVehiclesByType(inputs[1]));
+                            ConsoleUI.ShowSuccess($"Number of vehicles of type {inputs[1]}: {_parkingService.GetVehiclesByType(inputs[1])}");
                         }
                         break;
 
-                    case "registration_numbers_for_vehicles_with_odd_plate":
+                    case CommandConstants.REG_NUMBERS_ODD:
                         ValidateService();
                         if (_parkingService != null)
                         {
-                            Console.WriteLine(_parkingService.GetRegistrationNumbersByParity(true));
+                            ConsoleUI.ShowSuccess($"Vehicles with odd plate numbers: {_parkingService.GetRegistrationNumbersByParity(true)}");
                         }
                         break;
 
-                    case "registration_numbers_for_vehicles_with_even_plate":
+                    case CommandConstants.REG_NUMBERS_EVEN:
                         ValidateService();
                         if (_parkingService != null)
                         {
-                            Console.WriteLine(_parkingService.GetRegistrationNumbersByParity(false));
+                            ConsoleUI.ShowSuccess($"Vehicles with even plate numbers: {_parkingService.GetRegistrationNumbersByParity(false)}");
                         }
                         break;
 
-                    case "registration_numbers_for_vehicles_with_color":
+                    case CommandConstants.REG_NUMBERS_COLOR:
                         ValidateService();
                         if (_parkingService != null)
                         {
-                            Console.WriteLine(_parkingService.GetRegistrationNumbersByColor(inputs[1]));
+                            ConsoleUI.ShowSuccess($"Vehicles with color {inputs[1]}: {_parkingService.GetRegistrationNumbersByColor(inputs[1])}");
                         }
                         break;
 
-                    case "slot_numbers_for_vehicles_with_color":
+                    case CommandConstants.SLOT_NUMBERS_COLOR:
                         ValidateService();
                         if (_parkingService != null)
                         {
-                            Console.WriteLine(_parkingService.GetSlotNumbersByColor(inputs[1]));
+                            ConsoleUI.ShowSuccess($"Slot numbers for color {inputs[1]}: {_parkingService.GetSlotNumbersByColor(inputs[1])}");
                         }
                         break;
 
-                    case "slot_number_for_registration_number":
+                    case CommandConstants.SLOT_NUMBER_REG:
                         ValidateService();
                         if (_parkingService != null)
                         {
-                            Console.WriteLine(_parkingService.GetSlotNumberByRegistrationNumber(inputs[1]));
+                            ConsoleUI.ShowSuccess($"Slot number: {_parkingService.GetSlotNumberByRegistrationNumber(inputs[1])}");
                         }
                         break;
 
-                    case "exit":
+                    case CommandConstants.EXIT:
+                        ConsoleUI.ShowSuccess("Thank you for using Parking System!");
                         Environment.Exit(0);
                         break;
 
                     default:
-                        Console.WriteLine("Invalid command");
+                        ConsoleUI.ShowError("Invalid command");
                         break;
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                ConsoleUI.ShowError($"Error: {ex.Message}");
             }
         }
 

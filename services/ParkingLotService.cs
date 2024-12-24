@@ -1,5 +1,6 @@
 using ParkingSystem.Models;
 using ParkingSystem.Interfaces;
+using ParkingSystem.UI;
 
 namespace ParkingSystem.Services
 {
@@ -42,16 +43,12 @@ namespace ParkingSystem.Services
 
         public void Status()
         {
-            Console.WriteLine("Slot No. Registration No Type Colour");
-            foreach (var slot in _slots.OrderBy(x => x.Key))
-            {
-                Console.WriteLine($"{slot.Key} {slot.Value.RegistrationNumber} {slot.Value.Type} {slot.Value.Color}");
-            }
+            ConsoleUI.ShowStatus(_slots);
         }
 
         public int GetVehiclesByType(string type)
         {
-            return _slots.Count(x => x.Value.Type.Equals(type, StringComparison.OrdinalIgnoreCase));
+            return _slots.Count(x => x.Value != null && x.Value.Type.Equals(type, StringComparison.OrdinalIgnoreCase));
         }
 
         public string GetRegistrationNumbersByParity(bool isOdd)
