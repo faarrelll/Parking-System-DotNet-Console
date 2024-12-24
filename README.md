@@ -161,7 +161,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Authors
 
-* **Your Name** - *Initial work* - [YourGithubUsername](https://github.com/YourGithubUsername)
+* **Farrel Akbar** - *Initial work* - [faarrelll](https://github.com/faarrelll)
 
 ## Acknowledgments
 
